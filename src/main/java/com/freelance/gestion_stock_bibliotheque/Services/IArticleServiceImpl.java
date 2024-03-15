@@ -47,4 +47,17 @@ public class IArticleServiceImpl implements IArticleService{
        Article article=articleRepository.findById(id).orElseThrow(()->new RessourceNotFound("accun article avec l'id :" +id));
        return article;
     }
-}
+
+    @Override
+    public void supprimerArticle(Long id) {
+        Article article = articleRepository.findById(id).orElseThrow(() -> new RessourceNotFound("Article introuvable avec id "+id));
+
+        Stock stock = article.getStock();
+        if (stock != null) {
+            stockRepository.delete(stock);
+        }
+
+         articleRepository.delete(article);
+    }
+    }
+

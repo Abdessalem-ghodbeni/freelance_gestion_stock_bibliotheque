@@ -9,4 +9,5 @@ public interface IArticleService {
 List<Article> addArticles(List<Article> articles);
     List<Article> retrieveAllArticles();
     Article retrieveArticle(Long id);
+    void supprimerArticle(Long id);
 }

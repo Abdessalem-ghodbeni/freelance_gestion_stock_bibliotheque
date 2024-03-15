@@ -53,6 +53,16 @@ try{
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
         }
     }
+    @DeleteMapping(path = "/supprimer/article/{id}")
+    public ResponseEntity<String> Supprimerarticle(@PathVariable("id") long idArticle) {
+        try {
+            articleService.supprimerArticle(idArticle);
+            return ResponseEntity.ok("Article deleted Successfuly");
+        } catch (RessourceNotFound e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
 
+
+    }
 
 }
