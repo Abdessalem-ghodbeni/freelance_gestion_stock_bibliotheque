@@ -10,4 +10,5 @@ List<Article> addArticles(List<Article> articles);
     List<Article> retrieveAllArticles();
     Article retrieveArticle(Long id);
     void supprimerArticle(Long id);
+    Article UpdateArticle(Article newArticle);
 }

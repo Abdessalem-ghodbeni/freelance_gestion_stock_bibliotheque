@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -59,5 +60,39 @@ public class IArticleServiceImpl implements IArticleService{
 
          articleRepository.delete(article);
     }
+@Transactional
+    @Override
+
+    public Article UpdateArticle(Article newArticle) {
+    Article article = articleRepository.findById(newArticle.getIdArticle()).orElseThrow(() -> new RessourceNotFound("article non trouvable avec l'id : " + newArticle.getIdArticle()));
+ 
+    if (newArticle.getNomArticle() != null) {
+        article.setNomArticle(newArticle.getNomArticle());
     }
+    if (newArticle.getDescription() != null) {
+        article.setDescription(newArticle.getDescription());
+    }
+
+    float newPrice = newArticle.getPrix();
+    if (newPrice >0) {
+        article.setPrix(newPrice);
+    }
+    if (newArticle.getCategorie() != null) {
+        article.setCategorie(newArticle.getCategorie());
+    }
+    if (newArticle.getCodeQr() != null) {
+        article.setCodeQr(newArticle.getCodeQr());
+    }
+
+    Stock stock = article.getStock();
+    if (stock != null && newArticle.getStock() != null && !Float.isNaN(newArticle.getStock().getQuantite()) ) {
+        stock.setQuantite(newArticle.getStock().getQuantite());
+        stockRepository.save(stock);
+    }
+
+    Article updatedArticle = articleRepository.save(article);
+    return updatedArticle;
+}
+
+}
 

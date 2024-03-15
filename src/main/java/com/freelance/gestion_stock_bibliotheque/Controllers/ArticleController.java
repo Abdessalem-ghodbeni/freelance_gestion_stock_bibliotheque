@@ -64,5 +64,14 @@ try{
 
 
     }
+@PutMapping(path = "/update")
+    public ResponseEntity<?> mettreAJourArticle(@RequestBody Article article){
+        try {
+return  new ResponseEntity<>(articleService.UpdateArticle(article),HttpStatus.OK);
+        }
+        catch (RessourceNotFound exception){
+            return new ResponseEntity<>(exception.getMessage(),HttpStatus.NOT_FOUND);
+        }
 
+}
 }
