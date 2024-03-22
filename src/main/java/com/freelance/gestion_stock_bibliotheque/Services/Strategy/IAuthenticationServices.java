@@ -1,4 +1,4 @@
-package com.freelance.gestion_stock_bibliotheque.Services;
+package com.freelance.gestion_stock_bibliotheque.Services.Strategy;
 
 import com.freelance.gestion_stock_bibliotheque.Entities.*;
 

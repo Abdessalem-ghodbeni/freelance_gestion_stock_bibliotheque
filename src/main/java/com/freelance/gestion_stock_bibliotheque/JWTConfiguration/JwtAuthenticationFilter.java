@@ -1,7 +1,7 @@
 package com.freelance.gestion_stock_bibliotheque.JWTConfiguration;
 
-import com.freelance.gestion_stock_bibliotheque.Services.IJWTServices;
-import com.freelance.gestion_stock_bibliotheque.Services.IUserServices;
+import com.freelance.gestion_stock_bibliotheque.Services.Strategy.IJWTServices;
+import com.freelance.gestion_stock_bibliotheque.Services.Strategy.IUserServices;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

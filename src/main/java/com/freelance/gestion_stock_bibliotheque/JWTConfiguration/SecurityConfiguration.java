@@ -1,7 +1,7 @@
 package com.freelance.gestion_stock_bibliotheque.JWTConfiguration;
 
 import com.freelance.gestion_stock_bibliotheque.Entities.Role;
-import com.freelance.gestion_stock_bibliotheque.Services.IUserServices;
+import com.freelance.gestion_stock_bibliotheque.Services.Strategy.IUserServices;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

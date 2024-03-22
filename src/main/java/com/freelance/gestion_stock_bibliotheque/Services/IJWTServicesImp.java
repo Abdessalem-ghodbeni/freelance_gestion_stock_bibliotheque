@@ -1,5 +1,6 @@
 package com.freelance.gestion_stock_bibliotheque.Services;
 
+import com.freelance.gestion_stock_bibliotheque.Services.Strategy.IJWTServices;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -18,7 +19,7 @@ import java.util.function.Function;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class IJWTServicesImp implements IJWTServices{
+public class IJWTServicesImp implements IJWTServices {
     public String generateToken(UserDetails userDetails) {
         return Jwts.builder()
                 .setSubject(userDetails.getUsername())

@@ -1,6 +1,7 @@
 package com.freelance.gestion_stock_bibliotheque.Services;
 
 import com.freelance.gestion_stock_bibliotheque.Repository.IUserRepository;
+import com.freelance.gestion_stock_bibliotheque.Services.Strategy.IUserServices;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class IUserServicesImpl implements IUserServices{
+public class IUserServicesImpl implements IUserServices {
     private final IUserRepository userRepository;
     @Override
     public UserDetailsService userDetailsService() {

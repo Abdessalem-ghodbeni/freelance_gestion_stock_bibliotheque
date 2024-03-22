@@ -1,4 +1,4 @@
-package com.freelance.gestion_stock_bibliotheque.Services;
+package com.freelance.gestion_stock_bibliotheque.Services.Strategy;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 

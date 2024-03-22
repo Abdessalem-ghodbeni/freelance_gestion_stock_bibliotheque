@@ -4,6 +4,8 @@ import com.freelance.gestion_stock_bibliotheque.Entities.*;
 import com.freelance.gestion_stock_bibliotheque.Repository.IAdminRepository;
 import com.freelance.gestion_stock_bibliotheque.Repository.IEmployeRepository;
 import com.freelance.gestion_stock_bibliotheque.Repository.IUserRepository;
+import com.freelance.gestion_stock_bibliotheque.Services.Strategy.IAuthenticationServices;
+import com.freelance.gestion_stock_bibliotheque.Services.Strategy.IJWTServices;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,7 +18,7 @@ import java.util.HashMap;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class IAuthenticationServicesImpl implements IAuthenticationServices{
+public class IAuthenticationServicesImpl implements IAuthenticationServices {
     private final IUserRepository userRepository;
     private final IEmployeRepository employeRepository;
     private final IAdminRepository adminRepository;

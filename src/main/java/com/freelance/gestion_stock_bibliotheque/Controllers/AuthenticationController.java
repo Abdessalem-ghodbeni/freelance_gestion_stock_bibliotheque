@@ -2,7 +2,7 @@ package com.freelance.gestion_stock_bibliotheque.Controllers;
 
 import com.freelance.gestion_stock_bibliotheque.Entities.*;
 import com.freelance.gestion_stock_bibliotheque.Exception.RessourceNotFound;
-import com.freelance.gestion_stock_bibliotheque.Services.IAuthenticationServices;
+import com.freelance.gestion_stock_bibliotheque.Services.Strategy.IAuthenticationServices;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
