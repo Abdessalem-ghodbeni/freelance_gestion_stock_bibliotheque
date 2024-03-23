@@ -16,8 +16,9 @@ public class Article implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idArticle")
-    private int idArticle;
-
+    private int id;
+    @Column(name = "codearticle")
+    private String codeArticle;
     @Column(name = "nomArticle")
     private String nomArticle;
     @Column(name = "description")

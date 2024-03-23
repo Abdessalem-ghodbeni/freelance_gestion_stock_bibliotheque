@@ -16,15 +16,15 @@ public class LigneCommandeClient implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idLigneCommandeClient")
-    private int idLigneCommandeClient;
+    private int id;
 
 
     @ManyToOne
-    @JoinColumn(name = "idarticle")
+
     private Article article;
 
     @ManyToOne
-    @JoinColumn(name = "idcommandeclient")
+//    @JoinColumn(name = "idcommandeclient")
     private CommandeClient commandeClient;
 
     @Column(name = "quantite")

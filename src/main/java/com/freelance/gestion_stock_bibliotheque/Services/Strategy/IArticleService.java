@@ -1,14 +1,28 @@
 package com.freelance.gestion_stock_bibliotheque.Services.Strategy;
 
 import com.freelance.gestion_stock_bibliotheque.Entities.Article;
+import com.freelance.gestion_stock_bibliotheque.Entities.LigneCommandeClient;
+import com.freelance.gestion_stock_bibliotheque.Entities.LigneVente;
 
 import java.util.List;
 
 public interface IArticleService {
-//    Article article(Article article);
-List<Article> addArticles(List<Article> articles);
-    List<Article> retrieveAllArticles();
-    Article retrieveArticle(Long id);
-    void supprimerArticle(Long id);
-    Article UpdateArticle(Article newArticle);
+
+  public  Article save(Article dto);
+
+    Article findById(Integer id);
+
+    Article findByCodeArticle(String codeArticle);
+
+    List<Article> findAll();
+
+    List<LigneVente> findHistoriqueVentes(Integer idArticle);
+
+    List<LigneCommandeClient> findHistoriaueCommandeClient(Integer idArticle);
+
+//    List<LigneCommandeFournisseurDto> findHistoriqueCommandeFournisseur(Integer idArticle);
+
+
+
+    void delete(Integer id);
 }

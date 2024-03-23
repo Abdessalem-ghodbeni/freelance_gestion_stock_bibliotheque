@@ -16,14 +16,14 @@ public class LigneVente implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idLigneVente")
-    private int idLigneVente;
+    private int id;
 
     @ManyToOne
-    @JoinColumn(name = "idvente")
+
     private Ventes vente;
 
     @ManyToOne
-    @JoinColumn(name = "idarticle")
+
     private Article article;
 
     @Column(name = "quantite")

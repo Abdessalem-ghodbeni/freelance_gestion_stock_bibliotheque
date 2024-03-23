@@ -18,7 +18,7 @@ public class Ventes implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idVente")
-    private long idVente;
+    private int id;
     @Column(name = "code")
     private String code;
 

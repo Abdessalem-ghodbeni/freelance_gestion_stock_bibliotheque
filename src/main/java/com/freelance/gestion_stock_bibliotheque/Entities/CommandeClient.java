@@ -11,13 +11,13 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name="CommandeClient")
+@Table(name="commande_client")
 public class CommandeClient implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idCommandeClient")
-    private int idCommandeClient;
+    private int id;
 
 
     @Column(name = "code")
@@ -33,9 +33,14 @@ public class CommandeClient implements Serializable {
 
 
     @ManyToOne
-    @JoinColumn(name = "idclient")
+//    @JoinColumn(name = "idclient")
     private Client client;
 
     @OneToMany(mappedBy = "commandeClient")
     private List<LigneCommandeClient> ligneCommandeClients;
+
+    public boolean isCommandeLivree() {
+        return EtatCommande.LIVREE.equals(this.etatCommande);
+    }
+
 }
