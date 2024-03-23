@@ -33,5 +33,58 @@ public class MvtStkController {
     @GetMapping(path="/filter/article/{idArticle}")
     public List<MvtStk> mvtStkArticle(Integer idArticle) {
         return mvtStkService.mvtStkArticle(idArticle);
+
+}
+
+//    ajouter un mouvement de stock de type "ENTREE"
+@PostMapping(path= "/entree")
+public ResponseEntity<?> entreeStock(@RequestBody MvtStk dto){
+    try{
+        MvtStk mvtEntred=mvtStkService.entreeStock(dto);
+        return new ResponseEntity<>(mvtEntred,HttpStatus.CREATED);
+
     }
+    catch (RessourceNotFound exception){
+        return new ResponseEntity<>(exception.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+}
+
+    @PostMapping(path= "/sortie")
+    public ResponseEntity<?> sortieStock(@RequestBody MvtStk dto){
+        try{
+            MvtStk mvtSorted=mvtStkService.sortieStock(dto);
+            return new ResponseEntity<>(mvtSorted,HttpStatus.CREATED);
+
+        }
+        catch (RessourceNotFound exception){
+            return new ResponseEntity<>(exception.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    @PostMapping(path= "/correctionpos")
+    public ResponseEntity<?> correctionStockPos(@RequestBody MvtStk dto){
+        try{
+            MvtStk mvtCoorigee=mvtStkService.correctionStockPos(dto);
+            return new ResponseEntity<>(mvtCoorigee,HttpStatus.CREATED);
+
+        }
+        catch (RessourceNotFound exception){
+            return new ResponseEntity<>(exception.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping(path= "/correctionneg")
+    public ResponseEntity<?> correctionStockNeg(@RequestBody MvtStk dto){
+        try{
+            MvtStk mvtCoorigee=mvtStkService.correctionStockNeg(dto);
+            return new ResponseEntity<>(mvtCoorigee,HttpStatus.CREATED);
+
+        }
+        catch (RessourceNotFound exception){
+            return new ResponseEntity<>(exception.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
 }

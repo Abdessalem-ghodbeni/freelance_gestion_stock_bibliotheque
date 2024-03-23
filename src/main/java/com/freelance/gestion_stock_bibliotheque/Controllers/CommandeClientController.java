@@ -2,12 +2,15 @@ package com.freelance.gestion_stock_bibliotheque.Controllers;
 
 import com.freelance.gestion_stock_bibliotheque.Entities.Client;
 import com.freelance.gestion_stock_bibliotheque.Entities.CommandeClient;
+import com.freelance.gestion_stock_bibliotheque.Entities.EtatCommande;
 import com.freelance.gestion_stock_bibliotheque.Exception.RessourceNotFound;
 import com.freelance.gestion_stock_bibliotheque.Services.CommandeClientServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
 
 @RestController
 @CrossOrigin("*")
@@ -26,5 +29,63 @@ public class CommandeClientController {
             return new ResponseEntity<>(exception.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PatchMapping(path="/update/etat/{idCommande}/{etatCommande}")
+    public ResponseEntity<?> updateEtatCommande(@PathVariable("idCommande") Integer idCommande, @PathVariable("etatCommande") EtatCommande etatCommande){
+        try{
+            CommandeClient commandeUpdated=commandeClientService.updateEtatCommande(idCommande,etatCommande);
+            return ResponseEntity.ok(commandeUpdated);
+        }catch (RessourceNotFound exception){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception.getMessage());
+        }
+    }
+
+    @PatchMapping(path="/update/quantite/{idCommande}/{idLigneCommande}/{quantite}")
+    public ResponseEntity<?> updateQuantiteCommande(@PathVariable("idCommande") Integer idCommande,
+                                                    @PathVariable("idLigneCommande") Integer idLigneCommande, @PathVariable("quantite") BigDecimal quantite){
+        try{
+            CommandeClient commandeUpdated=commandeClientService.updateQuantiteCommande(idCommande,idLigneCommande,quantite);
+            return ResponseEntity.ok(commandeUpdated);
+        }catch (RessourceNotFound exception){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception.getMessage());
+        }
+    }
+
+
+    @PatchMapping(path="/update/client/{idCommande}/{idClient}")
+    public ResponseEntity<?> updateClient(@PathVariable("idCommande") Integer idCommande, @PathVariable("idClient") Integer idClient){
+        try{
+            CommandeClient commandeUpdated=commandeClientService.updateClient(idCommande,idClient);
+            return ResponseEntity.ok(commandeUpdated);
+        }catch (RessourceNotFound exception){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception.getMessage());
+        }
+    }
+
+
+    @PatchMapping(path="/update/article/{idCommande}/{idLigneCommande}/{idArticle}")
+    public ResponseEntity<?> updateArticle(@PathVariable("idCommande") Integer idCommande, @PathVariable("idLigneCommande") Integer idLigneCommande, @PathVariable("idArticle") Integer idArticle){
+        try{
+            CommandeClient commandeUpdated=commandeClientService.updateArticle(idCommande, idLigneCommande, idArticle);
+            return ResponseEntity.ok(commandeUpdated);
+        }catch (RessourceNotFound exception){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception.getMessage());
+        }
+
+
+
+
+    }
+    @DeleteMapping(path="/delete/article/{idCommande}/{idLigneCommande}")
+    public ResponseEntity<?>deleteArticle(@PathVariable("idCommande") Integer idCommande, @PathVariable("idLigneCommande") Integer idLigneCommande){
+        try{
+            CommandeClient commandeDeleted=commandeClientService.deleteArticle(idCommande, idLigneCommande);
+            return ResponseEntity.ok(commandeDeleted);
+        }catch (RessourceNotFound exception){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception.getMessage());
+
+        }
+    }
+
 
 }
