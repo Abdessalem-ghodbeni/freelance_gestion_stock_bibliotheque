@@ -25,7 +25,7 @@ public class ArticleController {
     public ResponseEntity<?>ajouterArticle(@RequestBody Article article){
 try{
     Article Newarticle=articleService.save(article);
-    return new ResponseEntity<>(article,HttpStatus.CREATED);
+    return new ResponseEntity<>(Newarticle,HttpStatus.CREATED);
 }catch (RessourceNotFound exception){
     return new ResponseEntity<>(exception.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
 }
@@ -42,7 +42,7 @@ try{
     }
 
 
-    @GetMapping(path="/filter/{codeArticle}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path="/filter/{codeArticle}")
     public ResponseEntity<?> findByCodeArticle(@PathVariable("codeArticle") String codeArticle){
         try{
             Article articleByCode=articleService.findByCodeArticle(codeArticle);

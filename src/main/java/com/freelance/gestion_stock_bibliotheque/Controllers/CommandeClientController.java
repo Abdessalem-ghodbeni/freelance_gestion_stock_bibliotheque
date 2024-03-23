@@ -1,16 +1,16 @@
 package com.freelance.gestion_stock_bibliotheque.Controllers;
 
-import com.freelance.gestion_stock_bibliotheque.Entities.Client;
-import com.freelance.gestion_stock_bibliotheque.Entities.CommandeClient;
-import com.freelance.gestion_stock_bibliotheque.Entities.EtatCommande;
+import com.freelance.gestion_stock_bibliotheque.Entities.*;
 import com.freelance.gestion_stock_bibliotheque.Exception.RessourceNotFound;
 import com.freelance.gestion_stock_bibliotheque.Services.CommandeClientServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @RestController
 @CrossOrigin("*")
@@ -86,6 +86,56 @@ public class CommandeClientController {
 
         }
     }
+
+
+    @GetMapping(path="/{idCommandeClient}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> findById(@PathVariable Integer idCommandeClient){
+        try{
+            CommandeClient commandeGetted=commandeClientService.findById(idCommandeClient);
+            return ResponseEntity.ok(commandeGetted);
+        }catch (RessourceNotFound exception){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception.getMessage());
+        }
+    }
+
+
+
+    @GetMapping(path="/filter/{codeCommandeClient}")
+    public ResponseEntity<?>findByCode(@PathVariable("codeCommandeClient") String code){
+        try{
+            CommandeClient commandeGetted=commandeClientService.findByCode(code);
+            return ResponseEntity.ok(commandeGetted);
+        }catch (RessourceNotFound exception){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception.getMessage());
+        }
+    }
+
+    @GetMapping( path="/all")
+    public ResponseEntity<?> findAll(){
+        try{
+            List<CommandeClient> commandeListeGetted=commandeClientService.findAll();
+            return ResponseEntity.ok(commandeListeGetted);
+        }catch (RessourceNotFound exception){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception.getMessage());
+        }
+    }
+//    @GetMapping(path="/lignesCommande/{idCommande}")
+//    public ResponseEntity<?> findAllLignesCommandesClientByCommandeClientId(@PathVariable("idCommande") Integer idCommande){
+//        try{
+//            List<LigneCommandeClient> liste=commandeClientService.findAllLignesCommandesClientByCommandeClientId(idCommande);
+//            return ResponseEntity.ok(liste);
+//        }catch (RessourceNotFound exception){
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception.getMessage());
+//        }
+//    }
+
+
+    @DeleteMapping(path ="/delete/{idCommandeClient}")
+    void delete(@PathVariable("idCommandeClient") Integer id){
+        commandeClientService.delete(id);
+
+    }
+
 
 
 }

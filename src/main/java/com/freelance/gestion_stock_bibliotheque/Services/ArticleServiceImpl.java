@@ -5,6 +5,7 @@ import com.freelance.gestion_stock_bibliotheque.Entities.LigneCommandeClient;
 import com.freelance.gestion_stock_bibliotheque.Entities.LigneVente;
 import com.freelance.gestion_stock_bibliotheque.Exceptions.EntityNotFoundException;
 import com.freelance.gestion_stock_bibliotheque.Exceptions.ErrorCodes;
+import com.freelance.gestion_stock_bibliotheque.Exceptions.InvalidOperationException;
 import com.freelance.gestion_stock_bibliotheque.Repository.IArticleRepository;
 import com.freelance.gestion_stock_bibliotheque.Repository.LigneCommandeClientRepository;
 import com.freelance.gestion_stock_bibliotheque.Repository.LigneVenteRepository;
@@ -22,9 +23,9 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ArticleServiceImpl implements IArticleService {
    private  final IArticleRepository articleRepository;
-    private LigneVenteRepository venteRepository;
+    private final LigneVenteRepository venteRepository;
 //    private LigneCommandeFournisseurRepository commandeFournisseurRepository;
-    private LigneCommandeClientRepository commandeClientRepository;
+    private final  LigneCommandeClientRepository commandeClientRepository;
 
     @Override
     public Article save(Article dto) {
