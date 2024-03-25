@@ -2,6 +2,7 @@ package com.freelance.gestion_stock_bibliotheque.Services.Strategy;
 
 import com.freelance.gestion_stock_bibliotheque.Entities.CommandeClient;
 import com.freelance.gestion_stock_bibliotheque.Entities.EtatCommande;
+import com.freelance.gestion_stock_bibliotheque.Entities.LigneCommandeClient;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -27,7 +28,7 @@ public interface CommandeClientService {
 
     List<CommandeClient> findAll();
 
-    List<CommandeClient> findAllLignesCommandesClientByCommandeClientId(Integer idCommande);
+    List<LigneCommandeClient> findAllLignesCommandesClientByCommandeClientId(Integer idCommande);
 
     void delete(Integer id);
 }

@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.module.ResolutionException;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -114,23 +115,20 @@ public class CommandeClientController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception.getMessage());
         }
     }
-//    @GetMapping(path="/lignesCommande/{idCommande}")
-//    public ResponseEntity<?> findAllLignesCommandesClientByCommandeClientId(@PathVariable("idCommande") Integer idCommande){
-//        try{
-//            List<LigneCommandeClient> liste=commandeClientService.findAllLignesCommandesClientByCommandeClientId(idCommande);
-//            return ResponseEntity.ok(liste);
-//        }catch (RessourceNotFound exception){
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception.getMessage());
-//        }
-//    }
-
-
-    @DeleteMapping(path ="/delete/{idCommandeClient}")
-    void delete(@PathVariable("idCommandeClient") Integer id){
-        commandeClientService.delete(id);
-
+    @GetMapping(path="/lignesCommande/{idCommande}")
+    public ResponseEntity<?> findAllLignesCommandesClientByCommandeClientId(@PathVariable("idCommande") Integer idCommande){
+        try{
+            List<LigneCommandeClient> liste=commandeClientService.findAllLignesCommandesClientByCommandeClientId(idCommande);
+            return ResponseEntity.ok(liste);
+        }catch (RessourceNotFound exception){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception.getMessage());
+        }
     }
 
+@DeleteMapping(path = "/{idCommandeClient}")
+    public void delete(@PathVariable("idCommandeClient") Integer id){
+         commandeClientService.delete(id);
+    }
 
 
 }
