@@ -39,7 +39,7 @@ public class CommandeClientController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception.getMessage());
         }
     }
-
+//   modifier la quantité du  produit dans une commande client
     @PatchMapping(path="/update/quantite/{idCommande}/{idLigneCommande}/{quantite}")
     public ResponseEntity<?> updateQuantiteCommande(@PathVariable("idCommande") Integer idCommande,
                                                     @PathVariable("idLigneCommande") Integer idLigneCommande, @PathVariable("quantite") BigDecimal quantite){
@@ -61,8 +61,6 @@ public class CommandeClientController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception.getMessage());
         }
     }
-
-
     @PatchMapping(path="/update/article/{idCommande}/{idLigneCommande}/{idArticle}")
     public ResponseEntity<?> updateArticle(@PathVariable("idCommande") Integer idCommande, @PathVariable("idLigneCommande") Integer idLigneCommande, @PathVariable("idArticle") Integer idArticle){
         try{
@@ -71,10 +69,6 @@ public class CommandeClientController {
         }catch (RessourceNotFound exception){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception.getMessage());
         }
-
-
-
-
     }
     @DeleteMapping(path="/delete/article/{idCommande}/{idLigneCommande}")
     public ResponseEntity<?>deleteArticle(@PathVariable("idCommande") Integer idCommande, @PathVariable("idLigneCommande") Integer idLigneCommande){
