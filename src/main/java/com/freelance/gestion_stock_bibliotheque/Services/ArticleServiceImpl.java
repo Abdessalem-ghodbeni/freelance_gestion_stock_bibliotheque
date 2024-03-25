@@ -3,16 +3,19 @@ package com.freelance.gestion_stock_bibliotheque.Services;
 import com.freelance.gestion_stock_bibliotheque.Entities.Article;
 import com.freelance.gestion_stock_bibliotheque.Entities.LigneCommandeClient;
 import com.freelance.gestion_stock_bibliotheque.Entities.LigneVente;
+import com.freelance.gestion_stock_bibliotheque.Entities.Stock;
 import com.freelance.gestion_stock_bibliotheque.Exceptions.EntityNotFoundException;
 import com.freelance.gestion_stock_bibliotheque.Exceptions.ErrorCodes;
 import com.freelance.gestion_stock_bibliotheque.Exceptions.InvalidOperationException;
 import com.freelance.gestion_stock_bibliotheque.Repository.IArticleRepository;
 import com.freelance.gestion_stock_bibliotheque.Repository.LigneCommandeClientRepository;
 import com.freelance.gestion_stock_bibliotheque.Repository.LigneVenteRepository;
+import com.freelance.gestion_stock_bibliotheque.Repository.StockRepository;
 import com.freelance.gestion_stock_bibliotheque.Services.Strategy.IArticleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
@@ -26,10 +29,26 @@ public class ArticleServiceImpl implements IArticleService {
     private final LigneVenteRepository venteRepository;
 //    private LigneCommandeFournisseurRepository commandeFournisseurRepository;
     private final  LigneCommandeClientRepository commandeClientRepository;
-
+    private  final StockRepository stockRepository;
+@Transactional
     @Override
     public Article save(Article dto) {
-        return  articleRepository.save(dto);
+        Article articleToAdd=new Article();
+        articleToAdd.setNomArticle(dto.getNomArticle());
+        articleToAdd.setCodeArticle(dto.getCodeArticle());
+        articleToAdd.setDescription(dto.getDescription());
+        articleToAdd.setCodeQr(dto.getCodeQr());
+        articleToAdd.setPrixUnitaireHt(dto.getPrixUnitaireHt());
+        articleToAdd.setPrixUnitaireTtc(dto.getPrixUnitaireTtc());
+        articleToAdd.setTauxTva(dto.getTauxTva());
+        articleToAdd.setStock(dto.getStock());
+        Stock stock=new Stock();
+        stock.setQuantite(dto.getStock().getQuantite());
+        stock.setArticle(articleToAdd);
+        articleToAdd.setStock(stock);
+        stockRepository.save(stock);
+
+        return  articleRepository.save(articleToAdd);
     }
 
     @Override

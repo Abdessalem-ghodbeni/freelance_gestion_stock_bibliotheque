@@ -12,7 +12,7 @@ import java.time.Instant;
 @Getter
 @Setter
 @Entity
-@Table(name="Stock")
+@Table(name="MvtStk")
 public class MvtStk implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

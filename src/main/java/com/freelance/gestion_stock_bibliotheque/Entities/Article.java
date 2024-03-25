@@ -23,8 +23,7 @@ public class Article implements Serializable {
     private String nomArticle;
     @Column(name = "description")
     private String description;
-    @Column(name = "categorie")
-    private String categorie;
+
     @Column(name = "codeQr")
     private String codeQr;
 //    @Column(name = "prix")
@@ -50,7 +49,8 @@ public class Article implements Serializable {
     @OneToMany(mappedBy = "article")
     private List<LigneCommandeClient> ligneCommandeClients;
 
-
+    @OneToOne(mappedBy = "article", cascade = CascadeType.ALL)
+    private Stock stock;
     @OneToMany(mappedBy = "article")
     private List<MvtStk> mvtStks;
 
