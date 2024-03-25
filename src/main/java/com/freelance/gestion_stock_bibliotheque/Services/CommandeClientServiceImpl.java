@@ -7,6 +7,7 @@ import com.freelance.gestion_stock_bibliotheque.Exceptions.InvalidOperationExcep
 import com.freelance.gestion_stock_bibliotheque.Repository.*;
 import com.freelance.gestion_stock_bibliotheque.Services.Strategy.CommandeClientService;
 import com.freelance.gestion_stock_bibliotheque.Services.Strategy.MvtStkService;
+import com.freelance.gestion_stock_bibliotheque.Validators.ArticleValidator;
 import com.freelance.gestion_stock_bibliotheque.Validators.CommandeClientValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +19,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -177,17 +179,66 @@ public class CommandeClientServiceImpl implements CommandeClientService {
 
     @Override
     public CommandeClient updateClient(Integer idCommande, Integer idClient) {
-        return null;
+        checkIdCommande(idCommande);
+        if (idClient == null) {
+            log.error("L'ID du client is NULL");
+            throw new InvalidOperationException("Impossible de modifier l'etat de la commande avec un ID client null",
+                    ErrorCodes.COMMANDE_CLIENT_NON_MODIFIABLE);
+        }
+        CommandeClient commandeClient = checkEtatCommande(idCommande);
+        Optional<Client> clientOptional = clientRepository.findById(idClient);
+        if (clientOptional.isEmpty()) {
+            throw new EntityNotFoundException(
+                    "Aucun client n'a ete trouve avec l'ID " + idClient, ErrorCodes.CLIENT_NOT_FOUND);
+        }
+        commandeClient.setClient(clientOptional.get());
+
+        return  commandeClientRepository.save(commandeClient);
+    }
+    private void checkIdArticle(Integer idArticle, String msg) {
+        if (idArticle == null) {
+            log.error("L'ID de " + msg + " is NULL");
+            throw new InvalidOperationException("Impossible de modifier l'etat de la commande avec un " + msg + " ID article null",
+                    ErrorCodes.COMMANDE_CLIENT_NON_MODIFIABLE);
+        }
     }
 
     @Override
     public CommandeClient updateArticle(Integer idCommande, Integer idLigneCommande, Integer newIdArticle) {
-        return null;
+        checkIdCommande(idCommande);
+        checkIdLigneCommande(idLigneCommande);
+        checkIdArticle(newIdArticle, "nouvel");
+
+        CommandeClient commandeClient = checkEtatCommande(idCommande);
+
+        Optional<LigneCommandeClient> ligneCommandeClient = findLigneCommandeClient(idLigneCommande);
+
+        Optional<Article> articleOptional = articleRepository.findById(newIdArticle);
+        if (articleOptional.isEmpty()) {
+            throw new EntityNotFoundException(
+                    "Aucune article n'a ete trouve avec l'ID " + newIdArticle, ErrorCodes.ARTICLE_NOT_FOUND);
+        }
+
+        List<String> errors = ArticleValidator.validate(articleOptional.get());
+        if (!errors.isEmpty()) {
+            throw new InvalidEntityException("Article invalid", ErrorCodes.ARTICLE_NOT_VALID, errors);
+        }
+
+        LigneCommandeClient ligneCommandeClientToSaved = ligneCommandeClient.get();
+        ligneCommandeClientToSaved.setArticle(articleOptional.get());
+        ligneCommandeClientRepository.save(ligneCommandeClientToSaved);
+
+        return commandeClient;
     }
 
     @Override
     public CommandeClient deleteArticle(Integer idCommande, Integer idLigneCommande) {
-        return null;
+        checkIdCommande(idCommande);
+        checkIdLigneCommande(idLigneCommande);
+        CommandeClient commandeClient = checkEtatCommande(idCommande);
+        findLigneCommandeClient(idLigneCommande);
+        ligneCommandeClientRepository.deleteById(idLigneCommande);
+        return commandeClient;
     }
 
     @Override
@@ -205,12 +256,21 @@ public class CommandeClientServiceImpl implements CommandeClientService {
 
     @Override
     public CommandeClient findByCode(String code) {
-        return null;
+        if (!StringUtils.hasLength(code)) {
+            log.error("Commande client CODE is NULL");
+            return null;
+        }
+        return commandeClientRepository.findCommandeClientByCode(code)
+
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Aucune commande client n'a ete trouve avec le CODE " + code, ErrorCodes.COMMANDE_CLIENT_NOT_FOUND
+                ));
     }
 
     @Override
     public List<CommandeClient> findAll() {
-        return null;
+        return commandeClientRepository.findAll().stream()
+                .collect(Collectors.toList());
     }
 
     @Override

@@ -51,7 +51,7 @@ public class CommandeClientController {
         }
     }
 
-
+//  MODIFIER LE   client associe a une commande specifié
     @PatchMapping(path="/update/client/{idCommande}/{idClient}")
     public ResponseEntity<?> updateClient(@PathVariable("idCommande") Integer idCommande, @PathVariable("idClient") Integer idClient){
         try{
@@ -61,6 +61,7 @@ public class CommandeClientController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception.getMessage());
         }
     }
+//   update un  article associé a une ligne de commande speecifique dans une commande client ddonné
     @PatchMapping(path="/update/article/{idCommande}/{idLigneCommande}/{idArticle}")
     public ResponseEntity<?> updateArticle(@PathVariable("idCommande") Integer idCommande, @PathVariable("idLigneCommande") Integer idLigneCommande, @PathVariable("idArticle") Integer idArticle){
         try{
