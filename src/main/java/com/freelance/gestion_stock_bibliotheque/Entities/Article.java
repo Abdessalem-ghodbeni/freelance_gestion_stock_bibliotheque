@@ -36,6 +36,9 @@ public class Article implements Serializable {
     @Column(name = "tauxtva")
     private BigDecimal tauxTva;
 
+    @Column(name = "remise")
+    private BigDecimal remise;
+
     @Column(name = "prixunitairettc")
     private BigDecimal prixUnitaireTtc;
 //    incluant toutes les taxes et impôts applicables

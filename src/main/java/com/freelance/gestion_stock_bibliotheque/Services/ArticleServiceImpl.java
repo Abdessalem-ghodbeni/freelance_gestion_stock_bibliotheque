@@ -41,6 +41,7 @@ public class ArticleServiceImpl implements IArticleService {
         articleToAdd.setPrixUnitaireHt(dto.getPrixUnitaireHt());
         articleToAdd.setPrixUnitaireTtc(dto.getPrixUnitaireTtc());
         articleToAdd.setTauxTva(dto.getTauxTva());
+        articleToAdd.setRemise(dto.getRemise());
         articleToAdd.setStock(dto.getStock());
         Stock stock=new Stock();
         stock.setQuantite(dto.getStock().getQuantite());
