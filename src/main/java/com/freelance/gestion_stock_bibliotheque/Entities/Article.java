@@ -1,5 +1,6 @@
 package com.freelance.gestion_stock_bibliotheque.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -48,12 +49,13 @@ public class Article implements Serializable {
 
     @OneToMany(mappedBy = "article")
     private List<LigneVente> ligneVentes;
-
+@JsonIgnore
     @OneToMany(mappedBy = "article")
     private List<LigneCommandeClient> ligneCommandeClients;
 
     @OneToOne(mappedBy = "article", cascade = CascadeType.ALL)
     private Stock stock;
+    @JsonIgnore
     @OneToMany(mappedBy = "article")
     private List<MvtStk> mvtStks;
 

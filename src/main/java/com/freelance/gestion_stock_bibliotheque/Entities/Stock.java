@@ -1,5 +1,6 @@
 package com.freelance.gestion_stock_bibliotheque.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,6 +20,7 @@ public class Stock implements Serializable {
 
    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idArticle")
+   @JsonIgnore
     private Article article;
 
     @Column(name = "quantite")
