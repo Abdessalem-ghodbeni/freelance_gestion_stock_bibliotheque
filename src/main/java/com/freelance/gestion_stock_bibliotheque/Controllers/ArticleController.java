@@ -31,6 +31,15 @@ try{
 }
  }
 
+ @PutMapping(path = "/update")
+ public ResponseEntity<?> updateARTICLE(@RequestBody Article article){
+     try{
+         return new ResponseEntity<>(articleService.UpdateArticle(article),HttpStatus.OK);
+     }
+     catch (RessourceNotFound exception){
+         return new ResponseEntity<>(exception.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+     }
+ }
     @GetMapping(path="/{idArticle}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> findById(@PathVariable("idArticle") Integer id){
         try{

@@ -4,6 +4,7 @@ import com.freelance.gestion_stock_bibliotheque.Entities.Article;
 import com.freelance.gestion_stock_bibliotheque.Entities.LigneCommandeClient;
 import com.freelance.gestion_stock_bibliotheque.Entities.LigneVente;
 import com.freelance.gestion_stock_bibliotheque.Entities.Stock;
+import com.freelance.gestion_stock_bibliotheque.Exception.RessourceNotFound;
 import com.freelance.gestion_stock_bibliotheque.Exceptions.EntityNotFoundException;
 import com.freelance.gestion_stock_bibliotheque.Exceptions.ErrorCodes;
 import com.freelance.gestion_stock_bibliotheque.Exceptions.InvalidOperationException;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,7 +53,39 @@ public class ArticleServiceImpl implements IArticleService {
 
         return  articleRepository.save(articleToAdd);
     }
+    @Transactional
+    @Override
+    public Article UpdateArticle(Article updatedArticle) {
 
+        Article existingArticle = articleRepository.findById(updatedArticle.getId())
+                .orElseThrow(() -> new EntityNotFoundException("Article not found with id: " + updatedArticle.getId()));
+
+        existingArticle.setCodeArticle(updatedArticle.getCodeArticle());
+        existingArticle.setNomArticle(updatedArticle.getNomArticle());
+        existingArticle.setDescription(updatedArticle.getDescription());
+        existingArticle.setCodeQr(updatedArticle.getCodeQr());
+        existingArticle.setPrixUnitaireHt(updatedArticle.getPrixUnitaireHt());
+        existingArticle.setTauxTva(updatedArticle.getTauxTva());
+        existingArticle.setRemise(updatedArticle.getRemise());
+        existingArticle.setPrixUnitaireTtc(updatedArticle.getPrixUnitaireTtc());
+
+        if (updatedArticle.getStock() != null) {
+            Stock existingStock = existingArticle.getStock();
+            Stock updatedStock = updatedArticle.getStock();
+
+            BigDecimal oldQuantity = existingStock.getQuantite();
+            BigDecimal newQuantity = updatedStock.getQuantite();
+
+            if (!oldQuantity.equals(newQuantity)) {
+                existingStock.setQuantite(newQuantity);
+                stockRepository.save(existingStock);
+            }
+        }
+
+        Article savedArticle = articleRepository.save(existingArticle);
+
+        return savedArticle;
+    }
     @Override
     public Article findById(Integer id) {
         if (id == null) {
@@ -96,6 +130,7 @@ public class ArticleServiceImpl implements IArticleService {
     public List<LigneCommandeClient> findHistoriaueCommandeClient(Integer idArticle) {
         return commandeClientRepository.findAllByArticleId(idArticle).stream().collect(Collectors.toList());
     }
+
 
 
 

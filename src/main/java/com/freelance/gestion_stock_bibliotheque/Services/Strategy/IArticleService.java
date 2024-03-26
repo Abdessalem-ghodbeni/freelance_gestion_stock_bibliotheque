@@ -22,7 +22,7 @@ public interface IArticleService {
 
 //    List<LigneCommandeFournisseurDto> findHistoriqueCommandeFournisseur(Integer idArticle);
 
-
+Article UpdateArticle(Article updatedArticle);
 
     void delete(Integer id);
 }
